@@ -3,7 +3,7 @@
 This repository contains the data processing and training code for EgoMimic - Both for Human Aria and Robot teleoperated Data and EgoLang. To rollout policies in the real world, you'll additionally need our hardware repo [Eve](https://github.com/SimarKareer/Eve).
 
 **Useful Links**
-- [Project Website](https://egomimic.github.io/)
+- [EgoMimic Project Website](https://egomimic.github.io/)
 - [Sample Dataset Huggingface](https://huggingface.co/datasets/gatech/EgoMimic/tree/main)
 
 ---
