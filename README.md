@@ -1,7 +1,6 @@
-# EgoMimic: Scaling Imitation Learning through Egocentric Video
-![Teaser](./assets/teaser.jpg)
+# EgoMimic and EgoLang: Scaling Imitation Learning through Egocentric Video
 
-This repository contains the data processing and training code for EgoMimic - Both for Human Aria and Robot teleoperated Data. To rollout policies in the real world, you'll additionally need our hardware repo [Eve](https://github.com/SimarKareer/Eve).
+This repository contains the data processing and training code for EgoMimic - Both for Human Aria and Robot teleoperated Data and EgoLang. To rollout policies in the real world, you'll additionally need our hardware repo [Eve](https://github.com/SimarKareer/Eve).
 
 **Useful Links**
 - [Project Website](https://egomimic.github.io/)
@@ -12,7 +11,7 @@ This repository contains the data processing and training code for EgoMimic - Bo
 ## Structure
 - [``egomimic/scripts/aloha_process``](./egomimic/scripts/aloha_process/): Process raw aloha style data into a robomimic style hdf5, compatible for training here.
 - [``egomimic/scripts/aria_process``](./egomimic/scripts/aria_process/): Process human embodiment data from Aria Glasses into a robomimic style hdf5.
-- [``egomimic/algo``](./egomimic/algo): Algorithm code for Egomimic, as well as ACT and mimicplay baselines
+- [``egomimic/algo``](./egomimic/algo): Algorithm code for Egomimic, as well as ACT and mimicplay baselines, and EgoLang (represented as HPT)
 - [``egomimic/configs``](./egomimic/configs): Train configs for each algorithm
 - [``egomimic/scripts/pl_train.py``](./egomimic/scripts/pl_train.py): Main training script, powered by Pytorch Lightning (DDP enabled)
 - [``data_processing.md``](./data_processing.md): Instructions to process your own data, both Aria Human data and teleoperated robot data.
@@ -20,12 +19,17 @@ This repository contains the data processing and training code for EgoMimic - Bo
 ## Installation
 
 ```
-git clone --recursive git@github.com:SimarKareer/EgoMimic.git
-cd EgoMimic
+git clone --recursive git@github.com:ryanthecreator/EgoLang-DL.git
+cd EgoLang-DL
 conda env create -f environment.yaml
 pip install projectaria-tools'[all]'
 pip install -e external/robomimic
 pip install -e .
+pip install zarr
+pip install tabulate
+pip install transformers
+pip intall timm
+pip install sentencepiece
 python external/robomimic/robomimic/scripts/setup_macros.py
 ```
 
@@ -60,15 +64,11 @@ wget https://huggingface.co/datasets/gatech/EgoMimic/resolve/main/bowlplace_robo
 
 ## EgoMimic Quick Start (Train on Sample Data)
 
-EgoMimic Training (Toy in Bowl Task)
+EgoLang Training (Multi-task)
 ```
-python scripts/pl_train.py --config configs/egomimic_oboo.json --dataset /path/to/bowlplace_robot.hdf5 --dataset_2 /path/to/bowlplace_human.hdf5 --debug
+python scripts/pl_train.py --config configs/hpt_multitask_mlp.json --dataset /path/to/robot.hdf5 --dataset_2 /path/to/human.hdf5 --debug
 ```
 
-ACT Baseline Training
-```
-python scripts/pl_train.py --config configs/act.json --dataset /path/to/bowlplace_robot.hdf5 --debug
-```
 
 For a detailed list of commands to run each experiment see [experiment_launch.md](./experiment_launch.md)
 
@@ -109,6 +109,6 @@ pip install -e .
 ```
 3. Rollout policy
 ```
-cd EgoMimic/egomimic
+cd EgoLang-DL/egomimic
 python scripts/evaluation/eval_real --eval-path <path to>EgoPlay/trained_models_highlevel/<your model folder>/models/<your ckpt>.ckpt
 ```
