@@ -1,4 +1,4 @@
-name: emimic
+name: elang
 channels:
   - pytorch
   - nvidia
